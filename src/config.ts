@@ -14,15 +14,17 @@ import {
 import Debug from "./debug";
 import { readJSON, tryReadJSON } from "./utils";
 import glob from "fast-glob";
+import { ITSPickExtra } from 'ts-type';
 
 const debug = Debug.extend("config");
 
 const targetSchema = type({
   extname: optional(string()),
+  module: optional(string()),
   transpileOnly: optional(boolean()),
 });
 
-export type Target = Infer<typeof targetSchema> & { [key: string]: unknown };
+export type Target = Partial<Infer<typeof targetSchema>> & { [key: string]: unknown };
 
 const configSchema = object({
   projects: optional(array(string())),
@@ -33,10 +35,8 @@ const configSchema = object({
 
 export type InferConfig = Infer<typeof configSchema>;
 
-export type Config = InferConfig & {
+export type Config = ITSPickExtra<InferConfig, 'projects'> & {
   cwd: string;
-  projects: string[];
-  targets?: Target[];
 };
 
 export async function resolveProjectPath(
