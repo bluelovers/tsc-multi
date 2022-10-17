@@ -1,10 +1,15 @@
 {
   "extends": "./tsconfig.json",
   "include": ["./src"],
-  "exclude": ["**/__fixtures__/**", "**/*.d.ts"],
+  "exclude": [
+    "**/__fixtures__/**",
+    "**/*.d.ts",
+    "**/.tmp/**"
+  ],
   "compilerOptions": {
     "outDir": "dist",
     "sourceMap": true,
-    "declaration": true
+    "declaration": true,
+    "noEmit": false
   }
 }
