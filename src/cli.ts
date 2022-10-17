@@ -62,7 +62,7 @@ const args = yargs(process.argv.slice(2))
         ]);
     }
   )
-  .showHelpOnFail(false).argv;
+  .showHelpOnFail(false).parseSync();
 
 (async () => {
   const projects = ([] as string[]).concat(args.projects || []);
