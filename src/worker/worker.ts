@@ -9,10 +9,11 @@ import {
 import { createRewriteImportTransformer } from "../transformers/rewriteImport";
 import { WorkerOptions } from "./types";
 import { dirname, extname, join } from "path";
+import { extendParsedCommandLineOfConfigFile } from '../tsconfig/tsconfig';
 
-const JS_EXT = ".js";
-const MAP_EXT = ".map";
-const JS_MAP_EXT = `${JS_EXT}${MAP_EXT}`;
+const JS_EXT = ".js" as const;
+const MAP_EXT = ".map" as const;
+const JS_MAP_EXT = `${JS_EXT}${MAP_EXT}` as const;
 
 type TS = typeof ts;
 
@@ -222,6 +223,8 @@ export class Worker {
       );
       if (!config) return;
 
+      extendParsedCommandLineOfConfigFile(config);
+
       // Set separated tsbuildinfo paths to avoid that multiple workers to
       // access the same tsbuildinfo files and potentially read/write corrupted
       // tsbuildinfo files
@@ -286,6 +289,8 @@ export class Worker {
       parseConfigFileHost
     );
     if (!config) return;
+
+    extendParsedCommandLineOfConfigFile(config);
 
     // TODO: Merge custom transformers
     const transformers: ts.CustomTransformers = {
