@@ -1,1 +1,1 @@
-export var DOT_FOLDER = "dot.folder";
+export const DOT_FOLDER = "dot.folder";

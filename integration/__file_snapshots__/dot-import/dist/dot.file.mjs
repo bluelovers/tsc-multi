@@ -1,1 +1,1 @@
-export var DOT_FILE = "dot.file";
+export const DOT_FILE = "dot.file";

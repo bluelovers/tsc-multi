@@ -1,5 +1,8 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var print_1 = require("./print.cjs");
-print_1.default("TypeScript");
+const print_1 = __importDefault(require("./print.cjs"));
+(0, print_1.default)("TypeScript");
 //# sourceMappingURL=index.cjs.map

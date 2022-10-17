@@ -1,1 +1,1 @@
-export var NAME = "TypeScript";
+export const NAME = "TypeScript";

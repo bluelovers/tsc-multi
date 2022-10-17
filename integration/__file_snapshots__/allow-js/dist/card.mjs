@@ -1,1 +1,1 @@
-export var defaultCardDeck = "Heart";
+export const defaultCardDeck = "Heart";

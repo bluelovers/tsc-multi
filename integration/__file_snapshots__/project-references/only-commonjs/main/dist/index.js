@@ -1,6 +1,9 @@
 "use strict";
-exports.__esModule = true;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 // eslint-disable-next-line node/no-missing-import
-var index_1 = require("../../print/dist/index.js");
-index_1["default"]("TypeScript");
+const index_1 = __importDefault(require("../../print/dist/index.js"));
+(0, index_1.default)("TypeScript");
 //# sourceMappingURL=index.js.map
