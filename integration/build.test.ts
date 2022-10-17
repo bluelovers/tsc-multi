@@ -4,7 +4,7 @@ import { join } from "path";
 import tmp from "tmp-promise";
 import { copy, writeJSON, readFile, mkdirp } from "fs-extra";
 import { Config } from "../src";
-import { toMatchFile } from "jest-file-snapshot";
+import { toMatchFile } from "jest-file-snapshot2";
 import glob from "fast-glob";
 
 expect.extend({ toMatchFile });
@@ -29,6 +29,7 @@ afterEach(async () => {
   await tmpDir.cleanup();
 });
 
+// @ts-ignore
 function runCLI(args: readonly string[] = [], options?: execa.Options) {
   return execa(join(__dirname, "../bin/tsc-multi.js"), args, {
     cwd: tmpDir.path,
@@ -75,15 +76,19 @@ async function matchOutputFiles(name: string) {
 }
 
 function runCJSModule(path: string) {
-  return execa.node(join(tmpDir.path, path));
+  return execa('node', [
+    join(tmpDir.path, path),
+  ]);
 }
 
 async function runESMModule(path: string) {
   await writeJSON(join(tmpDir.path, "package.json"), { type: "module" });
 
-  return execa.node(join(tmpDir.path, path), [], {
+  return execa('node', [
+    join(tmpDir.path, path),
+  ], {
     ...(!ESM_SUPPORTED && { nodeOptions: ["-r", "esm"] }),
-  });
+  } as any);
 }
 
 describe("single project", () => {
@@ -268,6 +273,7 @@ describe("single project", () => {
     await writeConfig({
       targets: [
         { extname: ".cjs", module: "commonjs" },
+        // @ts-ignore
         { extname: ".es2018.js", target: "es2018" },
         { extname: ".cjs", module: "esnext" },
       ],
@@ -285,6 +291,7 @@ describe("single project", () => {
 
   test("set declarationDir in target", async () => {
     await writeConfig({
+      // @ts-ignore
       targets: [{ declarationDir: "./types" }],
     });
 
@@ -606,6 +613,7 @@ describe("extra options in target", () => {
 
   test("success", async () => {
     await writeConfig({
+      // @ts-ignore
       targets: [{ removeComments: true }],
     });
 
@@ -749,6 +757,7 @@ describe("transpile only", () => {
           extname: ".cjs",
           module: "commonjs",
           transpileOnly: true,
+          // @ts-ignore
           sourceMap: true,
         },
       ],
@@ -763,6 +772,7 @@ describe("transpile only", () => {
   test("multiple targets", async () => {
     await writeConfig({
       targets: [
+        // @ts-ignore
         { extname: ".mjs", module: "esnext", declaration: true },
         { extname: ".cjs", module: "commonjs", transpileOnly: true },
       ],
